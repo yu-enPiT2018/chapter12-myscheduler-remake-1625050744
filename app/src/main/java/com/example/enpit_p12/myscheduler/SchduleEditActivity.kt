@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.text.format.DateFormat.*
+import android.view.View
 import io.realm.Realm
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
@@ -31,6 +32,9 @@ class SchduleEditActivity : AppCompatActivity() {
             format("yyyy/MM/dd", schedule?.date))
             titleEdit.setText(schedule?.title)
             detailEdit.setText(schedule?.detail)
+            delete.visibility = View.VISIBLE
+        } else {
+            delete.visibility = View.INVISIBLE
         }
 
         save.setOnClickListener {
@@ -65,6 +69,16 @@ class SchduleEditActivity : AppCompatActivity() {
                     }.show()
                 }
             }
+        }
+
+        delete.setOnClickListener{
+            realm.executeTransaction{
+                realm.where<Shcedule>().equalTo("id", scheduleId)
+                        ?.findFirst()?.deleteFromRealm()
+            }
+            alert("削除しました") {
+                yesButton { finish() }
+            }.show()
         }
     }
 
