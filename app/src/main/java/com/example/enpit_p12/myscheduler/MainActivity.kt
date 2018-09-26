@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
             startActivity<SchduleEditActivity>()
          }
 
+        listView.setOnItemClickListener{ parent, view, position, id ->
+            val schedule = parent.getItemAtPosition(position) as Shcedule
+            startActivity<SchduleEditActivity>(
+                    "schedule_id" to schedule.id)
+        }
     }
 
     override fun onDestroy() {
