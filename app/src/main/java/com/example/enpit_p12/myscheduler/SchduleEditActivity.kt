@@ -90,7 +90,7 @@ class SchduleEditActivity : AppCompatActivity() {
     fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date?{
         val sdFormat = try{
             SimpleDateFormat(pattern)
-        }catch (e: IllegalAccessException){
+        }catch (e: IllegalArgumentException){
             null
         }
         val date = sdFormat?.let {
